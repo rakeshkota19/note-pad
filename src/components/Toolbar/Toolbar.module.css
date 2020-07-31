@@ -1,0 +1,10 @@
+.Toolbar {
+    flex-flow: row nowrap;
+    left : 20px;
+    border-bottom: 2px solid silver;
+}
+
+
+.Button {
+    margin: 10px 10px;
+}

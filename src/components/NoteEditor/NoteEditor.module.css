@@ -1,0 +1,16 @@
+.NoteEditor {
+  float: left;
+  width: 75%;
+}
+
+
+.Content {
+   border-left: 1px solid white;
+   height: 600px;
+   background-color: whitesmoke;
+   resize: none;
+
+   float: left;
+   width: 100%;
+}
+

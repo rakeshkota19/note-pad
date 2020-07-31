@@ -1,0 +1,21 @@
+.NoteItem {
+    text-align:left;
+    padding: 10px 10px;
+    width: 100%;
+    border: 2px solid salmon;
+    background-color: palegoldenrod;
+    color: green;
+    margin : 2px;
+
+    transition : transform 0.3 ease-out;
+    transform: translateX(0);
+}
+
+
+
+.Select {
+    background-color: lightcoral;
+    transform: translateX(0);
+
+}
+

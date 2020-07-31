@@ -1,0 +1,10 @@
+.Layout {    
+    top : 200px;
+    left : 100px;
+    margin: 100px 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color : red;
+    background-color : wheat;
+    border-radius: 3px;
+    
+}

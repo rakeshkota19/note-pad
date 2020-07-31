@@ -1,0 +1,6 @@
+.NotepadHandler {
+    width: 100%;
+    border: 2px solid wheat;
+    box-sizing: border-box;
+    overflow: auto;
+}
