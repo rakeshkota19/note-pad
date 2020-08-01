@@ -29,6 +29,11 @@ const toolbar = (props) => {
             <button className = {classes.Button} onClick = {() => {props.deleted();}}>
                 <i className="fa fa-trash" aria-hidden="true"></i>
             </button>
+
+            <input className = {classes.Handle} type = "text"   
+                    placeholder = {props.user}
+                    onChange = {props.handle}>
+            </input>
  
         </div>
     );

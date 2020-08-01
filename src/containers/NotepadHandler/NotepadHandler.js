@@ -14,14 +14,17 @@ class NotepadHandler extends Component {
             notes: [],
             currentNote: null,
             noteIncrementId: 3,
-            sideDrawerDisplay: true
+            sideDrawerDisplay: true,
+            handle : "sampleUser"
         };
     }
 
     componentDidMount() {
         console.log("component mounting");
 
-        axios.get('.json').then((response) => {
+        let handle = this.state.handle;
+        axios.get(handle + '.json').then((response) => {
+            console.log(response);
             let data = response.data;
             let notes = data != null ? Object.values(data) : []
 
@@ -98,7 +101,8 @@ class NotepadHandler extends Component {
         });
 
 
-        axios.put(id + ".json", notes[currentNoteIndex])
+        let handle = this.state.handle;
+        axios.put(handle + "/" + id + ".json", notes[currentNoteIndex])
             .then(response => {
                 console.log(response)
             }).catch(err => {
@@ -139,7 +143,9 @@ class NotepadHandler extends Component {
         let index = notes.findIndex(x => x.id === deleteNoteId);
         notes.splice(index, 1);
 
-        axios.delete(deleteNoteId + ".json")
+        let handle = this.state.handle;
+
+        axios.delete(handle + "/" + deleteNoteId + ".json")
             .then(response => {
                 console.log(response);
                 this.setState({
@@ -161,13 +167,29 @@ class NotepadHandler extends Component {
         });
     }
 
+    handleUpdateHandler = (event) => {
+        console.log(event.target.value);
+
+        if (event.target.value === "")
+            event.target.value = "sampleUser";
+
+        this.setState({
+            handle : event.target.value
+        });
+
+        this.componentDidMount();
+    }
+
+
     render() {
         return (
             <div className={classes.NotepadHandler}>
                 <Toolbar add={this.createNoteHandler}
                     deleted={this.deleteNoteHandler}
                     toggle={this.sideDrawerToggleHandler}
-                    show={this.state.sideDrawerDisplay} />
+                    show={this.state.sideDrawerDisplay}
+                    handle = {this.handleUpdateHandler}
+                    user = {this.state.handle} />
                 <SideDrawer notes={this.state.notes}
                     clicked={this.viewNoteHandler}
                     currentNote={this.state.currentNote}

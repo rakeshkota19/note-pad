@@ -13,6 +13,10 @@
     
 }
 
+.Handle {
+    margin-left :  70%
+}
+
 @media(min-width : 700px) {
     .Toggle {
     display: none;
