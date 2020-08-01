@@ -113,6 +113,11 @@ class NotepadHandler extends Component {
     }
 
     createNoteHandler = () => {
+        if (this.state.handle == "") {
+            alert("Please Enter Handle to Continue");
+            return false;
+        }
+
         let noteId = this.state.noteIncrementId + 1;
 
         let newNote = {
@@ -134,8 +139,12 @@ class NotepadHandler extends Component {
 
         let currentNote = this.state.currentNote;
 
-        if (currentNote === null)
+        if (currentNote === null || this.state.handle == "") {
+
+            if (this.state.handle == '')
+                alert("Please Enter Handle to Continue");
             return;
+    }
 
         let deleteNoteId = currentNote.id;
         let notes = [...this.state.notes];
@@ -245,19 +254,20 @@ class NotepadHandler extends Component {
                     show={this.state.sideDrawerDisplay}
                     handle = {this.handleUpdateHandler}
                     user = {this.state.handle} />
+
                 <SideDrawer notes={this.state.notes}
                     clicked={this.viewNoteHandler}
                     currentNote={this.state.currentNote}
                     show={this.state.sideDrawerDisplay}
                     toggle={this.sideDrawerToggleHandler}
                 />
+
                 <NoteEditor
                     currentNote={this.state.currentNote}
                     updateNote={this.updateNoteHandler}
                     show={this.state.sideDrawerDisplay}
                     toggle={this.sideDrawerToggleHandler}
-                >
-                </NoteEditor>
+                />
             </div>
         );
     }

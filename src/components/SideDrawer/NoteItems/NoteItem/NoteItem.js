@@ -8,12 +8,12 @@ const noteItem = (props) => {
   if (props.currentNote !== undefined && props.id === props.currentNote.id) {
     attachedClasses.push(classes.Select);
   }
-
-    return (
-        <div className = {attachedClasses.join(' ')} onClick = {props.clicked}>
-          {props.title}
-        </div>
-    );
+  
+  return (
+      <div className = {attachedClasses.join(' ')} onClick = {props.clicked}>
+        {props.title}
+      </div>
+  );
 }
 
 

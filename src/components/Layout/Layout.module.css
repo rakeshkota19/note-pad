@@ -2,9 +2,14 @@
     top : 200px;
     left : 100px;
     margin: 100px 20px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color : red;
     background-color : wheat;
-    border-radius: 3px;
-    
+    border-radius: 3px;   
+}
+
+.Header {
+    font-family: 'Lobster Two', Helvetica, sans-serif;
+    font-size: x-large;
+    color: slateblue;
+    text-shadow: 1px 1px 0px #ededed, 4px 4px 0px rgba(0,0,0,0.15);
 }

@@ -15,9 +15,16 @@ const noteEditor = (props) => {
     let attachedClasses = [classes.NoteEditor];            
     if (props.show === true) {
         attachedClasses.push(classes.Hide);
+    }     
+    
+    if (note == "") {
+        note = <textarea type = "text"  disabled 
+        className = {classes.Content} 
+        value = {"Create a New Note to Continue"}
+             ></textarea>;
     }
-
-     return (
+    
+    return (
         <div className = {attachedClasses.join(' ')}>
             {note}
         </div>
