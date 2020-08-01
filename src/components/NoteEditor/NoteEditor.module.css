@@ -19,4 +19,9 @@
     float: left;
     width: 70%;
   }
+
+  .Hide {
+    display: none;
+  }
 }
+

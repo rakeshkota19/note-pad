@@ -3,7 +3,6 @@ import classes from './NoteItem.module.css';
 
 const noteItem = (props) => {
 
-  console.log(props);
   let attachedClasses = [classes.NoteItem];
 
   if (props.currentNote !== undefined && props.id === props.currentNote.id) {

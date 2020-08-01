@@ -2,20 +2,23 @@ import React from 'react';
 import classes from './NoteEditor.module.css';
 
 const noteEditor = (props) => {
-    let note = <textarea className = {classes.Content} placeholder = "New Note"></textarea>;
 
-    if (props.show === false) {
-    note = <textarea type = "text" 
+    let note = "";
+    if (props.currentNote !== null) {
+     note = <textarea type = "text" 
                 className = {classes.Content} 
                 value = {props.currentNote.text ? props.currentNote.text : ""}
                 placeholder = {props.currentNote.text ? " " : "Add Note"}
                 onChange = { (_) => { props.updateNote(_, props.currentNote.id)} }></textarea>;
-    } else {
-        note = ""
+    }
+
+    let attachedClasses = [classes.NoteEditor];            
+    if (props.show === false ) {
+        attachedClasses.push(classes.Hide);
     }
 
      return (
-        <div className = {classes.NoteEditor}>
+        <div className = {attachedClasses.join(' ')}>
             {note}
         </div>
     );

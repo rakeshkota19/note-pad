@@ -23,12 +23,19 @@ class NotepadHandler extends Component {
 
         axios.get('.json').then((response) => {
             let data = response.data;
-            let notes = Object.values(data);
+            let notes = data != null ? Object.values(data) : []
+
+            notes = notes.reduce((arr,curr) => {
+                if (curr === null)
+                    return arr;
+                arr.push(curr);
+                return arr;    
+            },[]);    
             
             notes.reverse();
             this.setState({
                 notes: notes,
-                currentNote: notes[0],
+                currentNote: notes.length > 0 ? notes[0] : null,
                 noteIncrementId: notes.length > 0 ? notes[0].id : 0
             });
             console.log("Data Updated");
@@ -43,7 +50,12 @@ class NotepadHandler extends Component {
                         title: "New Note",
                         "text": 'New Note'
                     }
-                ]
+                ],
+                currentNote :  {
+                    id: 1,
+                    title: "New Note",
+                    "text": 'New Note'
+                }
             });
         });
 
@@ -72,8 +84,8 @@ class NotepadHandler extends Component {
 
         if (text.length > 0) {
 
-            if (text.length > 10) {
-                notes[currentNoteIndex].title = text.substring(0, 15) + "...";
+            if (text.length > 8) {
+                notes[currentNoteIndex].title = text.substring(0, 9) + "...";
             } else {
                 notes[currentNoteIndex].title = text;
             }
@@ -117,6 +129,10 @@ class NotepadHandler extends Component {
     deleteNoteHandler = () => {
 
         let currentNote = this.state.currentNote;
+
+        if (currentNote === null)
+            return;
+
         let deleteNoteId = currentNote.id;
         let notes = [...this.state.notes];
 
@@ -128,7 +144,8 @@ class NotepadHandler extends Component {
                 console.log(response);
                 this.setState({
                     notes: notes,
-                    currentNote: index >= notes.length ? notes[index - 1] : notes[index]
+                    currentNote: notes.length > 0 ? (index >= notes.length ? notes[index - 1] : notes[index])
+                                                  : null   
                 });
             }).catch(err => {
                 console.log(err);

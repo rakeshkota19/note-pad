@@ -7,8 +7,7 @@
     color: green;
     margin : 2px;
 
-    transition : transform 0.3 ease-out;
-    transform: translateX(0);
+    transition : transform 1s ease-out;
 }
 
 
@@ -16,6 +15,14 @@
 .Select {
     background-color: lightcoral;
     transform: translateX(0);
-
 }
 
+.Remove {
+    transform: translatex(-100%);
+    width: 10%;
+}
+
+.Add {
+    transform: translatex(+100%);
+    width: 10%;
+}
