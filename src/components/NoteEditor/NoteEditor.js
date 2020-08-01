@@ -13,7 +13,7 @@ const noteEditor = (props) => {
     }
 
     let attachedClasses = [classes.NoteEditor];            
-    if (props.show === false ) {
+    if (props.show === true) {
         attachedClasses.push(classes.Hide);
     }
 
