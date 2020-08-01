@@ -4,9 +4,21 @@ import NoteItems from './NoteItems/NoteItems';
 
 
 const sideDrawer = (props) => {
+
+    let attachedClasses = [classes.SideDrawer];
+
+    if (!props.show) {
+        attachedClasses.push(classes.Close);
+    } else {
+        attachedClasses.push(classes.Open);
+    }
+
     return (
-        <div className = {classes.SideDrawer}>
-            <NoteItems notes = {props.notes} currentNote = {props.currentNote} clicked = {props.clicked}/>
+        <div className = {attachedClasses.join(' ')}>
+            <NoteItems notes = {props.notes}
+                        currentNote = {props.currentNote} 
+                        clicked = {props.clicked} 
+                        toggle = {props.toggle}/>
         </div>
     )
 }

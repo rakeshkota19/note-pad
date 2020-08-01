@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import axios from '../../axios-notes';
-import Hoc from '../../Hoc/Hoc';
 import classes from './NotepadHandler.module.css';
 import SideDrawer from '../../components/SideDrawer/SideDrawer';
 import NoteEditor from '../../components/NoteEditor/NoteEditor';
@@ -12,50 +11,43 @@ class NotepadHandler extends Component {
         super(props);
 
         this.state = {
-            notes : [],
-            currentNote : null,
-            noteIncrementId : 3
+            notes: [],
+            currentNote: null,
+            noteIncrementId: 3,
+            sideDrawerDisplay: true
         };
     }
 
     componentDidMount() {
-        console.log("component mounted");
+        console.log("component mounting");
 
         axios.get('.json').then((response) => {
             let data = response.data;
-
-            let notes = data.reduce( 
-                (arr, curr) => {
-
-                    if (curr !== null) {
-                        arr.push(curr);
-                    }
-                    
-                    return arr;
-                }, []);
-
+            let notes = Object.values(data);
+            
             notes.reverse();
             this.setState({
-                notes : notes,
-                currentNote : notes[0],
-                noteIncrementId : notes.length > 0 ? notes[0].id : 0 
+                notes: notes,
+                currentNote: notes[0],
+                noteIncrementId: notes.length > 0 ? notes[0].id : 0
             });
             console.log("Data Updated");
+
         }).catch((err) => {
             console.log(err);
 
-            this.setState ({
-                notes :  [
+            this.setState({
+                notes: [
                     {
-                        id : 1,
-                        title : "New Note",
-                        "text" : 'New Note'
+                        id: 1,
+                        title: "New Note",
+                        "text": 'New Note'
                     }
                 ]
             });
         });
 
-        
+        console.log("component mounted");
     }
 
     viewNoteHandler = (id) => {
@@ -66,12 +58,12 @@ class NotepadHandler extends Component {
 
         console.log(currentNote)
         this.setState({
-            currentNote : currentNote
+            currentNote: currentNote
         });
     }
 
     updateNoteHandler = (event, id) => {
-        
+
         let text = event.target.value;
 
         let notes = [...this.state.notes];
@@ -81,81 +73,96 @@ class NotepadHandler extends Component {
         if (text.length > 0) {
 
             if (text.length > 10) {
-                notes[currentNoteIndex].title = text.substring(0,15) + "...";
+                notes[currentNoteIndex].title = text.substring(0, 15) + "...";
             } else {
-            notes[currentNoteIndex].title = text;
+                notes[currentNoteIndex].title = text;
             }
         } else {
             notes[currentNoteIndex].title = "Blank";
         }
-    
+
         this.setState({
-            notes : notes
-         });
+            notes: notes
+        });
 
 
-        axios.put(id + ".json", notes[currentNoteIndex]).
-                    then(response => {
-                        console.log(response)
-                    }).catch( err => {
-                        console.log(err);
-                    }
-                    );
-        
+        axios.put(id + ".json", notes[currentNoteIndex])
+            .then(response => {
+                console.log(response)
+            }).catch(err => {
+                console.log(err);
+            }
+            );
+
     }
 
     createNoteHandler = () => {
         let noteId = this.state.noteIncrementId + 1;
-        
+
         let newNote = {
-            id : noteId,
-            title : 'Blank'
+            id: noteId,
+            title: 'Blank'
         }
 
-        let notes = [... this.state.notes];
+        let notes = [...this.state.notes];
 
         notes.unshift(newNote);
         this.setState({
-            notes : notes,
-            currentNote : newNote,
-            noteIncrementId : noteId
+            notes: notes,
+            currentNote: newNote,
+            noteIncrementId: noteId
         });
     }
 
     deleteNoteHandler = () => {
-        
+
         let currentNote = this.state.currentNote;
         let deleteNoteId = currentNote.id;
-        let notes = [... this.state.notes];
+        let notes = [...this.state.notes];
 
         let index = notes.findIndex(x => x.id === deleteNoteId);
-        notes.splice(index,1);
+        notes.splice(index, 1);
 
-        axios.delete(deleteNoteId + ".json").
-        then(response => {
-            console.log(response);
-            this.setState({
-                notes : notes,
-                currentNote : index >= notes.length ? notes[index-1] : notes[index]
-            });
-        }).catch( err => {
-            console.log(err);
-        }
-        );
+        axios.delete(deleteNoteId + ".json")
+            .then(response => {
+                console.log(response);
+                this.setState({
+                    notes: notes,
+                    currentNote: index >= notes.length ? notes[index - 1] : notes[index]
+                });
+            }).catch(err => {
+                console.log(err);
+            }
+            );
+    }
+
+    sideDrawerToggleHandler = () => {
+        let show = this.state.sideDrawerDisplay;
+        console.log(show);
+        this.setState({
+            sideDrawerDisplay: !show
+        });
     }
 
     render() {
         return (
-            <div className = {classes.NotepadHandler}>
-                <Toolbar add = {this.createNoteHandler}
-                        deleted = {this.deleteNoteHandler}/>
-                <SideDrawer notes = {this.state.notes} 
-                            clicked = {this.viewNoteHandler}
-                            currentNote = {this.state.currentNote}
-                            />
-                <NoteEditor 
-                    currentNote = {this.state.currentNote}
-                    updateNote = {this.updateNoteHandler}>
+            <div className={classes.NotepadHandler}>
+                <Toolbar add={this.createNoteHandler}
+                    deleted={this.deleteNoteHandler}
+                    toggle={this.sideDrawerToggleHandler}
+                    show={this.state.sideDrawerDisplay} />
+                <SideDrawer notes={this.state.notes}
+                    clicked={this.viewNoteHandler}
+                    currentNote={this.state.currentNote}
+                    show={this.state.sideDrawerDisplay}
+                    toggle={this.sideDrawerToggleHandler}
+                />
+                <NoteEditor
+                    currentNote={this.state.currentNote}
+                    updateNote={this.updateNoteHandler}
+                    show={this.state.sideDrawerDisplay}
+                    toggle={this.sideDrawerToggleHandler}
+                >
                 </NoteEditor>
             </div>
         );

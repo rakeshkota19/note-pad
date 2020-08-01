@@ -10,7 +10,7 @@ const noteItems = (props) => {
                         id = {note.id}
                         title = {note.title} 
                         currentNote = {props.currentNote}
-                        clicked = { (_) => { props.clicked(note.id)}}></NoteItem>
+                        clicked = { (_) => { props.clicked(note.id); props.toggle()}}></NoteItem>
     })
 
     return (

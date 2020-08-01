@@ -8,3 +8,13 @@
 .Button {
     margin: 10px 10px;
 }
+
+.Toggle {
+    
+}
+
+@media(min-width : 700px) {
+    .Toggle {
+    display: none;
+    }
+}
