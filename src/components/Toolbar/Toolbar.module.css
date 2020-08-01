@@ -14,7 +14,7 @@
 }
 
 .Handle {
-    margin-left :  70%
+    float: right;
 }
 
 @media(min-width : 700px) {

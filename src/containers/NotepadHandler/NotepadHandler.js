@@ -170,15 +170,70 @@ class NotepadHandler extends Component {
     handleUpdateHandler = (event) => {
         console.log(event.target.value);
 
-        if (event.target.value === "")
-            event.target.value = "sampleUser";
-
         this.setState({
             handle : event.target.value
         });
 
-        this.componentDidMount();
-    }
+        let handle = event.target.value;
+
+        if (handle == "") {
+            this.setState({
+                notes: [
+                    {
+                        id: 1,
+                        title: "New Note",
+                        "text": 'Enter your handle to Continue'
+                    }
+                ],
+                currentNote :  {
+                    id: 1,
+                    title: "New Note",
+                    "text": 'Enter your handle to Continue'
+                }
+            });
+            
+            return;
+        };
+
+        axios.get(handle + '.json').then((response) => {
+            console.log(response);
+            let data = response.data;
+            let notes = data != null ? Object.values(data) : []
+
+            notes = notes.reduce((arr,curr) => {
+                if (curr === null)
+                    return arr;
+                arr.push(curr);
+                return arr;    
+            },[]);    
+            
+            notes.reverse();
+            this.setState({
+                notes: notes,
+                currentNote: notes.length > 0 ? notes[0] : null,
+                noteIncrementId: notes.length > 0 ? notes[0].id : 0
+            });
+            console.log("Data Updated");
+
+        }).catch((err) => {
+            console.log(err);
+
+            this.setState({
+                notes: [
+                    {
+                        id: 1,
+                        title: "New Note",
+                        "text": 'New Note'
+                    }
+                ],
+                currentNote :  {
+                    id: 1,
+                    title: "New Note",
+                    "text": 'New Note'
+                }
+            });
+        });   
+     }
 
 
     render() {
